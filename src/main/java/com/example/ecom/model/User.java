@@ -12,6 +12,7 @@ import lombok.Data;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 
 @Entity
 @Data
@@ -19,7 +20,15 @@ import jakarta.persistence.Id;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "order_seq"
+    )
+    @SequenceGenerator(
+        name = "order_seq",
+        sequenceName = "order_sequence",
+        allocationSize = 1
+    )
     private Long id;
 
     private String name;

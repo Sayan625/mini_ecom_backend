@@ -7,32 +7,38 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
-
 
 @Entity
 @Data
+@Table(name = "cart_item")
 public class CartItem {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "cart_item_seq"
+    )
+    @SequenceGenerator(
+        name = "cart_item_seq",
+        sequenceName = "cart_item_sequence",
+        allocationSize = 1
+    )
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "cart_id", nullable = false)
     @JsonIgnore
     private Cart cart;
 
     @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Column(nullable = false)
     private int quantity;
-    
+
     @JsonIgnore
     @CreationTimestamp
     @Column(updatable = false)
@@ -41,5 +47,4 @@ public class CartItem {
     @JsonIgnore
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 }
