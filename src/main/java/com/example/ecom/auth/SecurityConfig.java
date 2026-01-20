@@ -41,7 +41,7 @@ public class SecurityConfig {
                                 "/api/adminlogin/**",
                                 "/api/adminregister/**"
 
-                            )
+                        )
                         .permitAll()
 
                         .requestMatchers(
@@ -63,7 +63,8 @@ public class SecurityConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // frontend
+        config.setAllowedOriginPatterns(Arrays.asList("*"));
+        // config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(true);
